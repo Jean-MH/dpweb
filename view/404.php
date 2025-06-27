@@ -7,8 +7,9 @@
  </head>
  <body>
    <center>
-    <img src="./view/img/f.jpg" alt="" width="30%">
-    <h1><strong>No se puede acceder a este sitio...</strong></h1>
+    <h1><strong>EL PROBLEMA NO ERES TU,SOY YO...</strong></h1>
+    <img src="../view/img/error.jpg" alt="" width="30%">
+    <H3>No se pudo ingresar a este sitio</H3>
     <button type="submit">Regresar</button>
    </center>
  </body>

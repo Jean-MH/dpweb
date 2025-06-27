@@ -7,7 +7,7 @@
   <style>
     body {
       font-family:Georgia, 'Times New Roman', Times, serif;
-      background-color:rgb(58, 167, 100);
+      background-color:rgb(68, 125, 248);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -35,7 +35,7 @@
     .login-form button {
       width: 100%;
       padding: 10px;
-      background-color:rgba(96, 231, 157, 0.95);
+      background-color:rgba(40, 54, 250, 0.95);
       color: white;
       border: none;
       border-radius: 4px;
