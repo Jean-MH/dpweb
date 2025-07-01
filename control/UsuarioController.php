@@ -27,13 +27,13 @@ if ($tipo == "registrar") {
         // validacion si existe persona con el mismo dni
         $existePersona = $objPersona->existePersona ($nro_identidad);
         if ($existePersona>0) {
-             $arrResponse = array ('estatus' => false, 'msg' => 'Error,numero de documento ya existe');
+             $arrResponse = array ('status' => false, 'msg' => 'Error,numero de documento ya existe');
         }else {
         $respuesta = $objPersona->registrar($nro_identidad, $razon_social,$telefono, $correo,$departamento,$provincia,$distrito, $cod_postal,$direccion, $rol,$password);
         if ($respuesta) {
-            $arrResponse = array ('estatus' => true, 'msg' => 'registrado correctamente');
+            $arrResponse = array ('status' => true, 'msg' => 'registrado correctamente');
         }else {
-             $arrResponse = array ('estatus' => true, 'msg' => 'Error,Fallo en registro');
+             $arrResponse = array ('status' => true, 'msg' => 'Error,Fallo en registro');
         } 
        }
     }
