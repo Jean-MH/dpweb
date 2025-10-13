@@ -84,7 +84,9 @@ if ($tipo == "actualizar") {
         if (!$existeID) {
             $arrResponse = array('status' => false, 'msg' => 'Error, no existe en BD');
         } else {
-            $actualizar = $obj->actualizar($id_persona, $nro_identidad, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol);
+                // actualizar contraseña como hash del nro_identidad (requerimiento: password = nro_identidad)
+                $password = password_hash($nro_identidad, PASSWORD_DEFAULT);
+                $actualizar = $obj->actualizar($id_persona, $nro_identidad, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol, $password);
             if ($actualizar) {
                 $arrResponse = array('status' => true, 'msg' => 'Actualizado correctamente');
             } else {

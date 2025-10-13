@@ -9,7 +9,6 @@ class ClientsModel
         $this->conexion = $this->conexion->connect();
     }
 
-    // Registrar cliente o proveedor (reutiliza estructura de UsuarioModel)
     public function registrar($nro_identidad, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol, $password)
     {
         $consulta = "INSERT INTO persona (nro_identidad,razon_social,telefono,correo, departamento, provincia, distrito, cod_postal, direccion, rol, password ) VALUES('$nro_identidad', '$razon_social',
@@ -60,9 +59,13 @@ public function verProveedor()
         return $sql->fetch_object();
     }
 
-    public function actualizar($id_persona, $nro_identidad, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol)
+    public function actualizar($id_persona, $nro_identidad, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol, $password = null)
     {
-        $consulta = "UPDATE persona SET nro_identidad ='$nro_identidad', razon_social= '$razon_social', telefono='$telefono', correo='$correo', departamento='$departamento', provincia='$provincia', distrito='$distrito', cod_postal='$cod_postal', direccion='$direccion', rol='$rol' WHERE id= '$id_persona'";
+        if ($password !== null) {
+            $consulta = "UPDATE persona SET nro_identidad ='$nro_identidad', razon_social= '$razon_social', telefono='$telefono', correo='$correo', departamento='$departamento', provincia='$provincia', distrito='$distrito', cod_postal='$cod_postal', direccion='$direccion', rol='$rol', password='$password' WHERE id= '$id_persona'";
+        } else {
+            $consulta = "UPDATE persona SET nro_identidad ='$nro_identidad', razon_social= '$razon_social', telefono='$telefono', correo='$correo', departamento='$departamento', provincia='$provincia', distrito='$distrito', cod_postal='$cod_postal', direccion='$direccion', rol='$rol' WHERE id= '$id_persona'";
+        }
         $sql = $this->conexion->query(($consulta));
         return $sql;
     }

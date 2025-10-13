@@ -268,13 +268,10 @@ async function edit_proveedor() {
   }
 }
 
-// Manejo del formulario de edición de proveedor
 if (document.querySelector("#frm_edit_proveedor")) {
   let frm = document.querySelector("#frm_edit_proveedor");
   frm.onsubmit = function (e) {
     e.preventDefault();
-    // Validamos campos mínimos antes de enviar
-    // Si necesitas validación específica para proveedores, la agregamos aquí
     actualizarProveedor();
   };
 }
