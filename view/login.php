@@ -2,73 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background-image: url('view/img/fondo.jpg');
-      font-family: Georgia, 'Times New Roman', Times, serif;
+      background:blue;
+      min-height: 100vh;
       display: flex;
-      background-repeat: no-repeat;
-      background-size: cover;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      justify-content: center;
     }
-
-    .login-form {
-      background-color:transparent;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      text-align: center;
-    }
-
-    .login-form h2 {
-      margin-bottom: 10px;
-    }
-
-    .login-form img {
-      width: 60px;
-      margin-bottom: 15px;
-    }
-
-    .login-form input {
+    .login-box {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
       width: 100%;
-      padding: 5px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      max-width: 400px;
     }
-
-    .login-form button {
-      width: 100%;
-      padding: 10px;
-      background-color: #63b7f2;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+    .login-box h2 {
+      margin-bottom: 1.5rem;
     }
-
-    .login-form button:hover {
-      background-color: #a0d0f1;
-    }
-
-    .forgot-password {
-      margin-top: 10px;
-    }
-
-    .forgot-password a {
-      color: #000;
-      text-decoration: none;
-    }
-
-    .forgot-password a:hover {
-      color: #a0d0f1;
-      text-decoration: underline;
+    .logo {
+      width: 80px;
+      margin-bottom: 1rem;
     }
   </style>
   <script>
@@ -76,18 +34,23 @@
   </script>
 </head>
 <body>
-  <div class="login-form">
-    <h2>Iniciar sesión</h2>
-    <form id="frm_login">
-      <img src="view/img/m.gif" alt="Logo">
-      <input type="text" placeholder="username" id="username" name="username" >
-      <input type="text" placeholder="password" id="password" name="password" >
-      <button type="button" onclick="iniciar_sesion();">Entrar</button>
-    </form>
-    <div class="forgot-password">
-      <a href="#">¿Olvidaste tu contraseña?</a>
+
+<div class="login-box text-center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/HD_transparent_picture.png" alt="Logo" class="logo">
+  <h2>Iniciar Sesión</h2>
+  <form id="frm_login">
+    <div class="mb-3 text-start">
+      <label for="username" class="form-label">Usuario</label>
+      <input type="text" class="form-control" id="username" name="username" required>
     </div>
-  </div>
-  <script src="<?= BASE_URL; ?>view/function/user.js"></script>
+    <div class="mb-3 text-start">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="button" class="btn btn-primary w-100" onclick="iniciar_sesion();">Ingresar</button>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<?= BASE_URL; ?>view/function/user.js"></script>
 </body>
 </html>
