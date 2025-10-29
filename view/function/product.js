@@ -47,7 +47,7 @@ function validar_form(tipo) {
     let id_categoria = document.getElementById("id_categoria").value;
     let fecha_vencimiento = document.getElementById("fecha_vencimiento").value;
     let imagen = document.getElementById("imagen").value;
-    if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || id_categoria == "" || fecha_vencimiento == "" || imagen == "") {
+    if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || id_categoria == "" || fecha_vencimiento == "" ){
         Swal.fire({
             title: "Error campos vacios!",
             icon: "Error",

@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="card">
-        <h5 class="card-header">Registro de Producto</h5>
+        <h5 class="card-header">Editar Producto</h5>
         <form id="frm_product" action="" method="" enctype="multipart/form-data">
             <div class="card-body">
                 <div class="mb-3 row">

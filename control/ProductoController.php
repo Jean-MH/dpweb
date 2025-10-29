@@ -35,7 +35,7 @@ if ($tipo === "registrar") {
         echo json_encode(['status' => false, 'msg' => 'Error, campos vacíos']);
         exit;
     }
-    if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
+    if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) { 
         echo json_encode(['status' => false, 'msg' => 'Error, imagen no recibida']);
         exit;
     }
