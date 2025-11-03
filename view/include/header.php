@@ -56,7 +56,10 @@
                                 Dropdown
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="">Perfil</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>login">login</a>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
