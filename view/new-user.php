@@ -1,5 +1,5 @@
 <!-- INICIO DE CUERPO DE PÁGINA -->
-    <div class="container-fluid">
+    <div class="container-fluid" id="home">
         <div class="card">
             <h5 class="card-header">Registro de Usuario</h5>
             
