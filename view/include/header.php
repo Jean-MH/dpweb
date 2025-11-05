@@ -34,6 +34,9 @@
                         <a class="nav-link" href="<?= BASE_URL ?>products">Products</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>ver-producto">View Products</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL ?>category">Categories</a>
                     </li>
                      <li class="nav-item">

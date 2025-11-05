@@ -1,7 +1,6 @@
 <div class="container">
     <h4 class="mt-3 mb-3">Lista de Productos</h4>
     <a href="<?= BASE_URL ?>new-product" class="btn btn-primary">Nuevo</a>
-    <a href="<?= BASE_URL ?>ver-producto" class="btn btn-warning">ver productos</a>
     <br><br>
     <table class="table table-bordered table-striped">
         <thead>
