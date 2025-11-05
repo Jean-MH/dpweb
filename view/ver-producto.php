@@ -33,7 +33,7 @@ $resultado = mysqli_query($conn, $sql);
 
   <h2 class="text-center mb-4">📦 Lista de Productos</h2>
 
-  <div class="row">
+  <div class="row" href="<?= BASE_URL ?>ver-producto">
     <?php while ($prod = mysqli_fetch_assoc($resultado)): ?>
       <div class="col-md-3 mb-4">
         <div class="card producto-card shadow-sm">
