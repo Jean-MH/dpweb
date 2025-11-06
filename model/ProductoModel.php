@@ -1,5 +1,5 @@
 <?php
-require_once("../library/conexion.php");
+require_once __DIR__ . '/../library/conexion.php';
 class ProductoModel
 {
     private $conexion;
@@ -11,13 +11,24 @@ class ProductoModel
     
     public function verProductos()
     {
-        $arr_categorias = array();
-        $consulta = "SELECT * FROM producto";
+        $productos = array();
+        $consulta = "SELECT * FROM producto ORDER BY id DESC";
         $sql = $this->conexion->query($consulta);
-        while ($objeto = $sql->fetch_object()) {
-            array_push($arr_categorias, $objeto);
+        
+        if (!$sql) {
+            error_log("Error en consulta: " . $this->conexion->error);
+            return [];
         }
-        return $arr_categorias;
+        
+        while ($producto = $sql->fetch_object()) {
+            array_push($productos, $producto);
+        }
+        
+        if (empty($productos)) {
+            error_log("No se encontraron productos en la base de datos");
+        }
+        
+        return $productos;
     }
     public function existeCodigo($codigo)
     {

@@ -25,25 +25,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?= BASE_URL ?>home">Home</a>
+                        <a class="nav-link active" aria-current="page" href="<?= BASE_URL ?>index.php?views=home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>users">Users</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?views=users">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>products">Products</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?views=products">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>ver-producto">View Products</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?views=ver-producto">View Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>category">Categories</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?views=category">Categories</a>
                     </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>clientes">Clients</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?views=clientes">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>proveedor-lista">Proveedores</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?views=proveedor-lista">Proveedores</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Shops</a>

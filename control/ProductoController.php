@@ -1,25 +1,30 @@
 <?php
-require_once("../model/ProductoModel.php");
-require_once("../model/CategoriaModel.php");
+require_once __DIR__ . '/../model/ProductoModel.php';
+require_once __DIR__ . '/../model/CategoriaModel.php';
 
 $objProducto = new ProductoModel();
 $objCategoria = new CategoriaModel();
 
-$tipo = $_GET['tipo'];
+$tipo = $_REQUEST['tipo'] ?? '';
 
 if ($tipo == "ver_productos") {
+    header('Content-Type: application/json; charset=utf-8');
     $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $productos = $objProducto->verProductos();
     $arrProduct = array();
     if (count($productos)) {
         foreach ($productos as $producto) {
             $categoria = $objCategoria->ver($producto->id_categoria);
-            $producto->categoria = $categoria->nombre;
+            $producto->categoria = $categoria->nombre ?? '';
             array_push($arrProduct, $producto);
         }
         $respuesta = array('status' => true, 'msg' => '', 'data' => $arrProduct);
+    } else {
+        // return empty data with status true to indicate successful request but empty list
+        $respuesta = array('status' => true, 'msg' => '', 'data' => []);
     }
     echo json_encode($respuesta);
+    exit;
 }
 if ($tipo === "registrar") {
     $codigo            = $_POST['codigo'] ?? '';
