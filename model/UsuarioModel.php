@@ -1,5 +1,5 @@
 <?php
-require_once("../library/conexion.php");
+require_once __DIR__ . '/../library/conexion.php';
 class UsuarioModel
 {
     private $conexion;
@@ -60,11 +60,24 @@ class UsuarioModel
 
 public function verProveedores(){
     $arr_proveedores = array ();
-    $consulta = "SELECT id, razon_social FROM persona WHERE rol = 'Proveedor' AND estado=1";
+    // Try to match providers in a case-insensitive, trimmed manner to avoid missing entries
+    $arr_proveedores = array();
+    $consulta = "SELECT id, razon_social, rol FROM persona WHERE LOWER(TRIM(rol)) LIKE '%proveedor%'";
     $sql = $this->conexion->query($consulta);
-    while ($objeto = $sql->fetch_object()) {
-        array_push($arr_proveedores, $objeto);
+    if ($sql) {
+        while ($objeto = $sql->fetch_object()) {
+            // keep only id and razon_social for response
+            $arr_proveedores[] = (object) [ 'id' => $objeto->id, 'razon_social' => $objeto->razon_social ];
+        }
+    } else {
+        error_log("verProveedores SQL error: " . $this->conexion->error);
     }
     return $arr_proveedores;
+}
+
+// Dev helper: return last DB error (empty string if none)
+public function getLastError()
+{
+    return $this->conexion->error ?? '';
 }
 }

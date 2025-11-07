@@ -1,9 +1,9 @@
 <?php
-require_once("../model/UsuarioModel.php");
+require_once __DIR__ . '/../model/UsuarioModel.php';
 
 $objPersona = new UsuarioModel();
 
-$tipo = $_GET['tipo'];
+$tipo = $_REQUEST['tipo'] ?? '';
 
 if ($tipo == "registrar") {
     //print_r($_POST);
@@ -134,11 +134,14 @@ if ($tipo == "eliminar") {
 }
 
 if ($tipo == "verProveedores") {
+    header('Content-Type: application/json; charset=utf-8');
     $proveedores = $objPersona->verProveedores();
     if (count($proveedores) > 0) {
         $respuesta = array('status' => true, 'data' => $proveedores);
     } else {
-        $respuesta = array('status' => false, 'msg' => 'No hay proveedor');
+        // include DB error for debugging (if any)
+        $db_error = method_exists($objPersona, 'getLastError') ? $objPersona->getLastError() : '';
+        $respuesta = array('status' => false, 'msg' => 'No hay proveedor', 'data' => [], 'db_error' => $db_error);
     }
     echo json_encode($respuesta);
     exit;

@@ -50,7 +50,7 @@ function validar_form(tipo) {
     if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || id_categoria == "" || fecha_vencimiento == "" ){
         Swal.fire({
             title: "Error campos vacios!",
-            icon: "Error",
+            icon: "error",
             draggable: true
         });
         return;
@@ -103,27 +103,61 @@ async function cargar_categorias() {
         cache: 'no-cache',
     });
     let json = await respuesta.json();
-    let contenido = '';
-    json.data.forEach(categoria => {
-        contenido += '<option value=""> '+categoria.nombre+' </option>';
-    });
-    console.log(contenido);
-    document.getElementById("id_categoria") .innerHTML = contenido;
+    let contenido = '<option value="">Seleccione</option>';
+    if (json && Array.isArray(json.data) && json.data.length) {
+        json.data.forEach(categoria => {
+            // Use the categoria id as the option value
+            contenido += '<option value="' + (categoria.id || '') + '"> ' + (categoria.nombre || '') + ' </option>';
+        });
+    } else {
+        console.warn('cargar_categorias: no hay categorias', json);
+    }
+    console.log('Categorias options:', contenido, json);
+    const selCat = document.getElementById("id_categoria");
+    if (selCat) selCat.innerHTML = contenido;
 }
 
 async function cargar_proveedores() {
-    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=listar_proveedor', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-    });
-    let json = await respuesta.json();
-    let contenido = '<option>Seleccione</option>';
-    json.data.forEach(proveedores => {
-        contenido += '<option value=""> '+proveedores.razon_social+' </option>';
-    });
-    console.log(contenido);
-    document.getElementById("id_proveedores") .innerHTML = contenido;
+    try {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=verProveedores', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+        });
+
+        const text = await respuesta.text();
+        if (!text) {
+            console.warn('verProveedores: respuesta vacía');
+            const selEmpty = '<option value="">Seleccione</option>';
+            const selEl = document.getElementById('id_proveedor');
+            if (selEl) selEl.innerHTML = selEmpty;
+            return;
+        }
+
+        let json;
+        try {
+            json = JSON.parse(text);
+        } catch (err) {
+            console.error('verProveedores: respuesta no JSON:', text);
+            const selEl = document.getElementById('id_proveedor');
+            if (selEl) selEl.innerHTML = '<option value="">Seleccione</option>';
+            return;
+        }
+
+        let contenido = '<option value="">Seleccione</option>';
+        if (json.status && Array.isArray(json.data)) {
+            json.data.forEach(proveedor => {
+                contenido += '<option value="' + proveedor.id + '"> ' + proveedor.razon_social + ' </option>';
+            });
+        }
+        console.log('Proveedores options:', contenido, json);
+        const select = document.getElementById("id_proveedor");
+        if (select) select.innerHTML = contenido;
+    } catch (e) {
+        console.error('Error en cargar_proveedores:', e);
+        const selEl = document.getElementById('id_proveedor');
+        if (selEl) selEl.innerHTML = '<option value="">Seleccione</option>';
+    }
 }
 
 

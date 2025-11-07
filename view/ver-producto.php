@@ -37,8 +37,7 @@ if (empty($productos)) {
         <div class="col-md-3 mb-4">
           <div class="card producto-card shadow-sm">
             <?php
-              // Resuelva la ruta de la imagen: si no existe en BD o está vacía, use placeholder
-              $img_rel = !empty($prod->imagen) ? htmlspecialchars($prod->imagen) : 'view/img/error.png';
+              $img_rel = !empty($prod->imagen) ? htmlspecialchars($prod->imagen) : 'view/img/exito.gif';
               $img_src = BASE_URL . $img_rel;
             ?>
             <img src="<?= $img_src ?>" 

@@ -45,7 +45,7 @@
                 <div class="mb-3 row">
                     <label for="id_proveedor" class="col-sm-4 col-form-label">Proveedor :</label>
                     <div class="col-sm-8">
-                       <select name="id_proveedores" id="id_proveedores">
+                       <select name="id_proveedor" id="id_proveedor">
                         <option value="">Seleccione</option>
                        </select>
                     </div>
