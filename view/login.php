@@ -7,26 +7,35 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background:blue;
+      background:#4FB83B;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .login-box {
-      background: white;
+      background: black;
       border-radius: 15px;
       padding: 2rem;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 1);
       width: 100%;
       max-width: 400px;
     }
     .login-box h2 {
+      color: white;
       margin-bottom: 1.5rem;
+    }
+    .login-box label{
+      color: white;
     }
     .logo {
       width: 80px;
       margin-bottom: 1rem;
+    }
+    .w-100{
+      background: #22960aff;
+      color: white;
+      border-radius: 10px;
     }
   </style>
   <script>
@@ -47,7 +56,7 @@
       <label for="password" class="form-label">Contraseña</label>
       <input type="password" class="form-control" id="password" name="password" required>
     </div>
-    <button type="button" class="btn btn-primary w-100" onclick="iniciar_sesion();">Ingresar</button>
+    <button type="button" class=" w-100" id="boton" onclick="iniciar_sesion();">Ingresar</button>
   </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

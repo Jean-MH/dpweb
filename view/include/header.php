@@ -15,8 +15,90 @@
         }
         ?>
 </head>
+<style>
+    .table, table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(255,255,255,0.02);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        width: 100%;
+    }
+    .table thead {
+        background: linear-gradient(90deg, #4FB83B 0%, #2FA04A 100%);
+        color: #000000ff;
+    }
+    .table thead th {
+        border: 0;
+        padding: .75rem 1rem;
+        font-weight: 600;
+        vertical-align: middle;
+    }
+    .table tbody td {
+        padding: .65rem 1rem;
+        color: #111111ff;
+        vertical-align: middle;
+        border-top: 1px solid rgba(255,255,255,0.03);
+    }
+    .table tbody tr {
+        transition: background .12s ease, transform .08s ease;
+    }
+    .table tbody tr:hover {
+        background: rgba(79,184,59,0.04);
+        transform: translateY(-2px);
+    }
+    .table .actions { white-space: nowrap; }
+
+
+    .form-table input, .form-table select, .form-table textarea {
+        background-color: #0b0b0b;
+        color: #000000ff;
+        border: 1px solid #2b2b2b;
+        padding: .5rem .6rem;
+        border-radius: 6px;
+    }
+
+    
+    .table-responsive {
+        border-radius: 10px;
+        padding: .6rem;
+        background: transparent;
+    }
+
+    .btn-sm {
+        padding: .25rem .5rem;
+        border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+        .table thead { display: none; }
+        .table tbody td { display: block; width: 100%; }
+        .table tbody tr { margin-bottom: .6rem; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.6); border-radius: 8px; }
+    }
+    body {
+        background-color: #000000;
+    }
+    .navbar-expand-lg{
+        background-color: #4FB83B;
+    }
+    h4{
+        color : white;
+    }
+    h2{
+        color: white;
+    }
+    .btn-primary {
+        background-color: #4FB83B;
+        border-color: #4FB83B;
+    }
+    .btn-primary:hover {
+        background-color: #3fa02f;
+        border-color: #3fa02f;
+    }
+</style>
 <body>
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Logo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

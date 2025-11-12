@@ -7,7 +7,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
-
 <body>
     <div class="container-fluid row m-0 p-0">
         <div class="col-md-4 col-sm-12 row m-0 p-0" style="height:300px; background-color:blue;">

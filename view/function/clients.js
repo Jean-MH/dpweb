@@ -90,7 +90,7 @@ async function view_clients() {
           <td>${item.correo}</td>
           <td>${estado}</td>
           <td>
-            <a href="${base_url}edit-client/${item.id}" class="btn btn-primary btn-sm">Editar</a>
+            <a href="${base_url}edit-client/${item.id}" class="btn-sm">Editar</a>
             <a href="#" onclick="if(confirm('¿Desea eliminar este registro?')) eliminar_cp(${item.id}); return false;" class="btn btn-danger btn-sm ms-1">Eliminar</a>
           </td>
         `;
@@ -219,7 +219,7 @@ async function view_proveedores() {
           <td>${item.correo}</td>
           <td>${estado}</td>
           <td>
-            <a href="${base_url}edit-proveedor/${item.id}" class="btn btn-primary btn-sm">Editar</a>
+            <a href="${base_url}edit-proveedor/${item.id}" class="btn-sm">Editar</a>
             <a href="#" onclick="if(confirm('¿Desea eliminar este registro?')) eliminar_cp(${item.id}); return false;" class="btn btn-danger btn-sm ms-1">Eliminar</a>
           </td>
         `;
