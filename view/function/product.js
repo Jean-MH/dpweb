@@ -21,6 +21,7 @@ async function view_products() {
                             <td>${producto.stock}</td>
                             <td>${producto.categoria}</td>
                             <td>${producto.fecha_vencimiento}</td>
+                            <td><svg id="barcode${producto.id}"></svg></td>
                             <td>
                                 <a href="`+ base_url + `edit-product/` + producto.id + `">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + producto.id + `);">Eliminar</button>
@@ -28,136 +29,147 @@ async function view_products() {
                 `;
                 cont++;
                 contenidot.appendChild(nueva_fila);
-            });
-        }
+                JsBarcode("#barcode" + producto.id, "" + producto.codigo, {
+                        format: "pharmacode",
+                        lineColor: "#4FB83B",
+                        width: 3,
+                        height: 30,
+                        displayValue: false
+
+                });
+                });
+                //json.data.forEach(producto => {
+                //    JsBarcode("#barcode" + producto.id, "Hi world!");
+                // });
+            }
     } catch (e) {
-        console.log('error en mostrar producto ' + e);
+            console.log('error en mostrar producto ' + e);
+        }
     }
-}
 if (document.getElementById('content_products')) {
-    view_products();
-}
-
-function validar_form(tipo) {
-    let codigo = document.getElementById("codigo").value;
-    let nombre = document.getElementById("nombre").value;
-    let detalle = document.getElementById("detalle").value;
-    let precio = document.getElementById("precio").value;
-    let stock = document.getElementById("stock").value;
-    let id_categoria = document.getElementById("id_categoria").value;
-    let fecha_vencimiento = document.getElementById("fecha_vencimiento").value;
-    let imagen = document.getElementById("imagen").value;
-    if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || id_categoria == "" || fecha_vencimiento == "" ){
-        Swal.fire({
-            title: "Error campos vacios!",
-            icon: "error",
-            draggable: true
-        });
-        return;
-    }
-    if (tipo == "nuevo") {
-        registrarProducto();
-    }
-    if (tipo == "actualizar") {
-        actualizarProducto();
+        view_products();
     }
 
-}
+    function validar_form(tipo) {
+        let codigo = document.getElementById("codigo").value;
+        let nombre = document.getElementById("nombre").value;
+        let detalle = document.getElementById("detalle").value;
+        let precio = document.getElementById("precio").value;
+        let stock = document.getElementById("stock").value;
+        let id_categoria = document.getElementById("id_categoria").value;
+        let fecha_vencimiento = document.getElementById("fecha_vencimiento").value;
+        let imagen = document.getElementById("imagen").value;
+        if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || id_categoria == "" || fecha_vencimiento == "") {
+            Swal.fire({
+                title: "Error campos vacios!",
+                icon: "error",
+                draggable: true
+            });
+            return;
+        }
+        if (tipo == "nuevo") {
+            registrarProducto();
+        }
+        if (tipo == "actualizar") {
+            actualizarProducto();
+        }
 
-if (document.querySelector('#frm_product')) {
-    // evita que se envie el formulario
-    let frm_product = document.querySelector('#frm_product');
-    frm_product.onsubmit = function (e) {
-        e.preventDefault();
-        validar_form("nuevo");
     }
-}
 
-async function registrarProducto() {
-    try {
-        //capturar campos de formulario (HTML)
-        const datos = new FormData(frm_product);
-        //enviar datos a controlador
-        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=registrar', {
+    if (document.querySelector('#frm_product')) {
+        // evita que se envie el formulario
+        let frm_product = document.querySelector('#frm_product');
+        frm_product.onsubmit = function (e) {
+            e.preventDefault();
+            validar_form("nuevo");
+        }
+    }
+
+    async function registrarProducto() {
+        try {
+            //capturar campos de formulario (HTML)
+            const datos = new FormData(frm_product);
+            //enviar datos a controlador
+            let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=registrar', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                body: datos
+            });
+            let json = await respuesta.json();
+            // validamos que json.status sea = True
+            if (json.status) { //true
+                alert(json.msg);
+                document.getElementById('frm_product').reset();
+            } else {
+                alert(json.msg);
+            }
+        } catch (e) {
+            console.log("Error al registrar Producto:" + e);
+        }
+    }
+    async function cargar_categorias() {
+        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
-            body: datos
         });
         let json = await respuesta.json();
-        // validamos que json.status sea = True
-        if (json.status) { //true
-            alert(json.msg);
-            document.getElementById('frm_product').reset();
+        let contenido = '<option value="">Seleccione</option>';
+        if (json && Array.isArray(json.data) && json.data.length) {
+            json.data.forEach(categoria => {
+                // Use the categoria id as the option value
+                contenido += '<option value="' + (categoria.id || '') + '"> ' + (categoria.nombre || '') + ' </option>';
+            });
         } else {
-            alert(json.msg);
+            console.warn('cargar_categorias: no hay categorias', json);
         }
-    } catch (e) {
-        console.log("Error al registrar Producto:" + e);
+        console.log('Categorias options:', contenido, json);
+        const selCat = document.getElementById("id_categoria");
+        if (selCat) selCat.innerHTML = contenido;
     }
-}
-async function cargar_categorias() {
-    let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-    });
-    let json = await respuesta.json();
-    let contenido = '<option value="">Seleccione</option>';
-    if (json && Array.isArray(json.data) && json.data.length) {
-        json.data.forEach(categoria => {
-            // Use the categoria id as the option value
-            contenido += '<option value="' + (categoria.id || '') + '"> ' + (categoria.nombre || '') + ' </option>';
-        });
-    } else {
-        console.warn('cargar_categorias: no hay categorias', json);
-    }
-    console.log('Categorias options:', contenido, json);
-    const selCat = document.getElementById("id_categoria");
-    if (selCat) selCat.innerHTML = contenido;
-}
 
-async function cargar_proveedores() {
-    try {
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=verProveedores', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-        });
-
-        const text = await respuesta.text();
-        if (!text) {
-            console.warn('verProveedores: respuesta vacía');
-            const selEmpty = '<option value="">Seleccione</option>';
-            const selEl = document.getElementById('id_proveedor');
-            if (selEl) selEl.innerHTML = selEmpty;
-            return;
-        }
-
-        let json;
+    async function cargar_proveedores() {
         try {
-            json = JSON.parse(text);
-        } catch (err) {
-            console.error('verProveedores: respuesta no JSON:', text);
+            let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=verProveedores', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+            });
+
+            const text = await respuesta.text();
+            if (!text) {
+                console.warn('verProveedores: respuesta vacía');
+                const selEmpty = '<option value="">Seleccione</option>';
+                const selEl = document.getElementById('id_proveedor');
+                if (selEl) selEl.innerHTML = selEmpty;
+                return;
+            }
+
+            let json;
+            try {
+                json = JSON.parse(text);
+            } catch (err) {
+                console.error('verProveedores: respuesta no JSON:', text);
+                const selEl = document.getElementById('id_proveedor');
+                if (selEl) selEl.innerHTML = '<option value="">Seleccione</option>';
+                return;
+            }
+
+            let contenido = '<option value="">Seleccione</option>';
+            if (json.status && Array.isArray(json.data)) {
+                json.data.forEach(proveedor => {
+                    contenido += '<option value="' + proveedor.id + '"> ' + proveedor.razon_social + ' </option>';
+                });
+            }
+            console.log('Proveedores options:', contenido, json);
+            const select = document.getElementById("id_proveedor");
+            if (select) select.innerHTML = contenido;
+        } catch (e) {
+            console.error('Error en cargar_proveedores:', e);
             const selEl = document.getElementById('id_proveedor');
             if (selEl) selEl.innerHTML = '<option value="">Seleccione</option>';
-            return;
         }
-
-        let contenido = '<option value="">Seleccione</option>';
-        if (json.status && Array.isArray(json.data)) {
-            json.data.forEach(proveedor => {
-                contenido += '<option value="' + proveedor.id + '"> ' + proveedor.razon_social + ' </option>';
-            });
-        }
-        console.log('Proveedores options:', contenido, json);
-        const select = document.getElementById("id_proveedor");
-        if (select) select.innerHTML = contenido;
-    } catch (e) {
-        console.error('Error en cargar_proveedores:', e);
-        const selEl = document.getElementById('id_proveedor');
-        if (selEl) selEl.innerHTML = '<option value="">Seleccione</option>';
     }
-}
 
 
