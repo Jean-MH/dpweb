@@ -23,7 +23,7 @@ if (empty($productos)) {
 </style>
 <div class="container py-4">
 
-  <h2 class="text-center mb-4">Lista de Productos</h2>
+  <h2 class="text-center mb-4">Vista de Productos</h2>
 
   <div class="row">
     <?php if (empty($productos)): ?>

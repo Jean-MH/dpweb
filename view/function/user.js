@@ -198,19 +198,33 @@ async function fn_eliminar(id) {
 async function eliminar(id) {
     let datos = new FormData();
     datos.append('id_persona', id);
-    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=eliminar', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        body: datos
-    });
-    json = await respuesta.json();
-    if (!json.status) {
-        alert("Oooooops, ocurrio un error al eliminar persona, intentelo mas tarde");
-        console.log(json.msg);
-        return;
-    }else{
-        alert(json.msg);
-        location.replace(base_url + 'users');
+    try {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=eliminar', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        const text = await respuesta.text();
+        console.log('Respuesta del servidor:', text);
+        let json;
+        try {
+            json = JSON.parse(text);
+        } catch (parseErr) {
+            console.error('Error al parsear JSON:', parseErr, 'Texto:', text);
+            alert("Error: respuesta inválida del servidor. Ver consola para detalles.");
+            return;
+        }
+        if (!json.status) {
+            alert("Error al eliminar: " + (json.msg || 'Error desconocido'));
+            console.log('Respuesta completa:', json);
+            return;
+        }else{
+            alert(json.msg);
+            location.replace(base_url + 'users');
+        }
+    } catch (e) {
+        console.error('Error en eliminar:', e);
+        alert("Error al conectar con el servidor: " + e.message);
     }
 }

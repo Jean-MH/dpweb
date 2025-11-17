@@ -53,9 +53,28 @@ class UsuarioModel
         return $sql;
     }
     public function eliminar($id){
-        $consulta = "DELETE FROM persona WHERE id='$id'";
+        $id = intval($id);
+        if ($id <= 0) {
+            error_log("UsuarioModel::eliminar - Invalid id: $id");
+            return false;
+        }
+        $consulta = "DELETE FROM persona WHERE id=$id";
+        error_log("UsuarioModel::eliminar - Ejecutando: $consulta");
         $sql = $this->conexion->query($consulta);
-        return $sql;
+        if (!$sql) {
+            $error = $this->conexion->error;
+            error_log("UsuarioModel::eliminar - Query error: $error");
+            return false;
+        }
+        $affected = $this->conexion->affected_rows;
+        error_log("UsuarioModel::eliminar - Affected rows: $affected");
+        if ($affected > 0) {
+            error_log("UsuarioModel::eliminar - User $id deleted successfully");
+            return true;
+        } else {
+            error_log("UsuarioModel::eliminar - No user found with id: $id");
+            return false;
+        }
     }
 
 public function verProveedores(){

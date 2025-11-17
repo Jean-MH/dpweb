@@ -74,9 +74,28 @@ class ProductoModel
         return $sql;
     }
      public function eliminar($id){
-        $consulta = "DELETE FROM producto WHERE id='$id'";
+        $id = intval($id);
+        if ($id <= 0) {
+            error_log("ProductoModel::eliminar - Invalid id: $id");
+            return false;
+        }
+        $consulta = "DELETE FROM producto WHERE id=$id";
+        error_log("ProductoModel::eliminar - Ejecutando: $consulta");
         $sql = $this->conexion->query($consulta);
-        return $sql;
+        if (!$sql) {
+            $error = $this->conexion->error;
+            error_log("ProductoModel::eliminar - Query error: $error");
+            return false;
+        }
+        $affected = $this->conexion->affected_rows;
+        error_log("ProductoModel::eliminar - Affected rows: $affected");
+        if ($affected > 0) {
+            error_log("ProductoModel::eliminar - Product $id deleted successfully");
+            return true;
+        } else {
+            error_log("ProductoModel::eliminar - No product found with id: $id");
+            return false;
+        }
     }
     
 }

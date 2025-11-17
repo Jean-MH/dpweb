@@ -121,16 +121,21 @@ if ($tipo == "actualizar") {
 }
 
 if ($tipo == "eliminar") {
+    header('Content-Type: application/json; charset=utf-8');
     //print_r($_POST);
-    $id_persona = $_POST['id_persona'];
-    $respuesta = array('status' => false, 'msg' => '');
+    $id_persona = $_POST['id_persona'] ?? '';
+    if ($id_persona === '') {
+        echo json_encode(['status' => false, 'msg' => 'Error, id no recibido']);
+        exit;
+    }
     $resultado = $objPersona->eliminar($id_persona);
     if ($resultado) {
         $respuesta = array('status' => true, 'msg' => 'Eliminado Correctamente');
     }else {
-        $respuesta = array('status' => false, 'msg' => $resultado);
+        $respuesta = array('status' => false, 'msg' => 'Error, no se pudo eliminar el usuario');
     }
     echo json_encode($respuesta);
+    exit;
 }
 
 if ($tipo == "verProveedores") {

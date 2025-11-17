@@ -172,4 +172,45 @@ if (document.getElementById('content_products')) {
         }
     }
 
+    async function fn_eliminar(id) {
+        if (window.confirm("¿Confirmar eliminar producto?")) {
+            eliminar(id);
+        }
+    }
+
+    async function eliminar(id) {
+        let datos = new FormData();
+        datos.append('id_producto', id);
+        try {
+            let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=eliminar', {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                body: datos
+            });
+            const text = await respuesta.text();
+            console.log('Respuesta del servidor (producto):', text);
+            let json;
+            try {
+                json = JSON.parse(text);
+            } catch (parseErr) {
+                console.error('Error al parsear JSON:', parseErr, 'Texto:', text);
+                alert("Error: respuesta inválida del servidor. Ver consola para detalles.");
+                return;
+            }
+            if (!json.status) {
+                alert("Error al eliminar producto: " + (json.msg || 'Error desconocido'));
+                console.log('Respuesta completa:', json);
+                return;
+            } else {
+                alert(json.msg);
+                // reload the page to show updated list
+                location.reload();
+            }
+        } catch (e) {
+            console.error("Error al eliminar producto: " + e);
+            alert("Error al conectar con el servidor: " + e.message);
+        }
+    }
+
 

@@ -82,3 +82,23 @@ if ($tipo === "registrar") {
     }
     exit;
 }
+
+if ($tipo == "eliminar") {
+    header('Content-Type: application/json; charset=utf-8');
+    $id_producto = $_POST['id_producto'] ?? '';
+    $respuesta = array('status' => false, 'msg' => 'Error al eliminar');
+    
+    if ($id_producto === "") {
+        echo json_encode(['status' => false, 'msg' => 'Error, id no recibido']);
+        exit;
+    }
+    
+    $resultado = $objProducto->eliminar($id_producto);
+    if ($resultado) {
+        $respuesta = array('status' => true, 'msg' => 'Producto eliminado correctamente');
+    } else {
+        $respuesta = array('status' => false, 'msg' => 'Error, no se pudo eliminar el producto');
+    }
+    echo json_encode($respuesta);
+    exit;
+}
