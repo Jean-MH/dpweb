@@ -68,6 +68,7 @@
                             <option value="Administrador">Administrador</option>
                             <option value="Vendedor">Vendedor</option>
                             <option value="Proveedor">Proveedor</option>
+                            <option value="cliente">Cliente</option>
                         </select>
                     </div>
                 </div>
