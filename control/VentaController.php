@@ -85,12 +85,14 @@ if ($tipo === "actualizarCantidadTemporalPorId") {
 if ($tipo === "registrarVenta") {
 
     $id_cliente = intval($_POST['id_cliente'] ?? 0);
+    $id_vendedor = intval($id_usuario); // Asumo que $id_usuario es tu vendedor
 
     if ($id_cliente <= 0) {
         echo json_encode(['status' => false, 'msg' => 'ID de cliente no válido']);
         exit;
     }
 
+    // Buscar productos en el carrito temporal
     $temporales = $objVenta->buscarTemporales($id_usuario);
 
     if (count($temporales) === 0) {
@@ -98,13 +100,24 @@ if ($tipo === "registrarVenta") {
         exit;
     }
 
+    // Calcular total
     $total = 0;
     foreach ($temporales as $t) {
         $total += $t['precio'] * $t['cantidad'];
     }
 
-    $venta_id = $objVenta->registrarVenta($id_usuario, $id_cliente, $total);
+    // Generar un código de venta único
+    $codigo = 'V' . str_pad(rand(1, 99999), 5, '0', STR_PAD_LEFT);
 
+    // Registrar venta en la tabla 'venta'
+    try {
+        $venta_id = $objVenta->registrarVenta($id_vendedor, $id_cliente, $total, $codigo);
+    } catch (PDOException $e) {
+        echo json_encode(['status' => false, 'msg' => 'Error al registrar la venta: ' . $e->getMessage()]);
+        exit;
+    }
+
+    // Registrar detalles de venta y descontar stock
     foreach ($temporales as $t) {
         $objVenta->registrarDetalleVenta(
             $venta_id,
@@ -115,8 +128,9 @@ if ($tipo === "registrarVenta") {
         $objProducto->descontarStock((int)$t['id_producto'], (int)$t['cantidad']);
     }
 
+    // Eliminar productos temporales del carrito
     $objVenta->eliminarTemporales($id_usuario);
 
-    echo json_encode(['status' => true, 'total' => round($total, 2)]);
+    echo json_encode(['status' => true, 'total' => round($total, 2), 'codigo' => $codigo]);
     exit;
 }
