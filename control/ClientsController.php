@@ -55,6 +55,21 @@ if ($tipo == "ver_proveedor") {
     echo json_encode($respuesta);
 }
 
+if ($tipo == "buscarPorDNI") {
+    $dni = $_POST['dni'] ?? '';
+    if (empty($dni)) {
+        echo json_encode(['status' => false, 'msg' => 'DNI no proporcionado.']);
+        exit;
+    }
+    $cliente = $obj->buscarPorDNI($dni);
+    if ($cliente) {
+        echo json_encode(['status' => true, 'data' => $cliente]);
+    } else {
+        echo json_encode(['status' => false, 'msg' => 'No se encontró un cliente con ese DNI.']);
+    }
+    exit;
+}
+
 if ($tipo == "ver") {
     $id_persona = $_POST['id_persona'];
     $respuesta = array('status' => false, 'msg' => 'No encontrado');

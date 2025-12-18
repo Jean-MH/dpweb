@@ -14,6 +14,42 @@
             //echo $ruta[1];
         }
         ?>
+    <style>
+        .mini-cart {
+            position: relative;
+            cursor: pointer;
+        }
+        .cart-counter {
+            position: absolute;
+            top: -10px;
+            right: -12px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 2px solid #4FB83B; /* Match navbar color */
+        }
+        .dropdown-menu-cart {
+            min-width: 320px;
+            padding: 1rem;
+            background-color: #f8f9fa; /* Light background for the dropdown */
+            color: #212529; /* Dark text */
+            border: 1px solid rgba(0,0,0,.15);
+        }
+        .dropdown-menu-cart .dropdown-header {
+            color: #212529;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 0.75rem;
+        }
+    </style>
 </head>
 <style>
     .table, table {
@@ -134,28 +170,35 @@
                         <a class="nav-link" href="#">Sales</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <ul class="navbar-nav px-4">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="">Perfil</a></li>
-                                <li>
-                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>login">login</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
-                            </ul>
-                        </li>
-                        <li>
-
-                        </li>
-                    </ul>
-                </form>
+                <!-- Mini Carrito y Dropdown de Usuario -->
+                <div class="d-flex align-items-center">
+                    <!-- Mini Carrito -->
+                    <div class="dropdown me-3">
+                        <a class="nav-link text-white mini-cart" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span class="cart-counter" id="cart-counter">0</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-cart" id="mini-cart-dropdown">
+                            <h6 class="dropdown-header">Carrito de Compras</h6>
+                            <div id="mini-cart-items">
+                                <div class="text-center p-2">El carrito está vacío.</div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="px-2"><strong>Total: <span id="mini-cart-total">S/ 0.00</span></strong></div>
+                            <a href="<?= BASE_URL ?>index.php?views=venta" class="btn btn-primary w-100 mt-2">Ir a Pagar</a>
+                        </div>
+                    </div>
+                    <!-- Dropdown de Usuario -->
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi Cuenta</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Perfil</a></li>
+                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>login">Login</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

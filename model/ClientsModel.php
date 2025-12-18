@@ -29,6 +29,15 @@ class ClientsModel
         return $sql->num_rows;
     }
 
+    public function buscarPorDNI($nro_identidad)
+    {
+        $sql = "SELECT id, nro_identidad, razon_social FROM persona WHERE nro_identidad = ? AND rol = 'Cliente' LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $nro_identidad);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_object();
+    }
+
    public function verClientes()
 {
     $arr_items = array();
